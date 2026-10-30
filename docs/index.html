@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>People of Nivalis</title>
+<meta name="description" content="A mod for Nivalis Nights: walk up to anyone, press T, and talk to them in your own words. They remember you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0d14;
+  --bg2: #11141f;
+  --panel: #161a28;
+  --line: #262b3d;
+  --text: #e6e8f0;
+  --muted: #9aa1b8;
+  --cyan: #5ee6ff;
+  --pink: #ff5fa8;
+  --amber: #ffc86b;
+  --radius: 14px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--cyan); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+/* Hero */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 72px 0 64px;
+  background:
+    radial-gradient(900px 420px at 85% -10%, rgba(255,95,168,.22), transparent 60%),
+    radial-gradient(800px 400px at 0% 110%, rgba(94,230,255,.16), transparent 60%),
+    linear-gradient(180deg, #0e1120, var(--bg));
+  border-bottom: 1px solid var(--line);
+}
+.skyline {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 120px; opacity: .35; pointer-events: none;
+  background:
+    linear-gradient(transparent 0 0) ,
+    repeating-linear-gradient(90deg, #0b0d14 0 38px, transparent 38px 46px, #0b0d14 46px 70px, transparent 70px 76px);
+  -webkit-mask: linear-gradient(transparent, #000 60%);
+          mask: linear-gradient(transparent, #000 60%);
+}
+.hero-grid { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+.eyebrow { font: 500 13px/1 "Space Grotesk", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--pink); }
+h1 {
+  font: 700 clamp(40px, 6vw, 68px)/1.02 "Space Grotesk", sans-serif;
+  margin: 14px 0 18px; letter-spacing: -.02em;
+}
+h1 span { background: linear-gradient(90deg, var(--cyan), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { font-size: 19px; color: var(--muted); max-width: 34em; margin: 0 0 28px; }
+.lede b { color: var(--text); font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px; border-radius: 999px; text-decoration: none;
+  font: 600 16px/1 Inter, sans-serif; transition: transform .15s, box-shadow .15s, background .15s;
+}
+.btn-primary { background: linear-gradient(90deg, var(--cyan), #8fd0ff); color: #06121a; box-shadow: 0 6px 28px rgba(94,230,255,.28); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 34px rgba(94,230,255,.4); }
+.btn-ghost { color: var(--text); border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.btn-ghost:hover { border-color: var(--cyan); }
+.meta { margin-top: 14px; font-size: 14px; color: var(--muted); }
+
+/* A conversation, as the mod shows it */
+.chat {
+  background: rgba(22,26,40,.82); backdrop-filter: blur(6px);
+  border: 1px solid var(--line); border-radius: 18px; padding: 18px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+}
+.chat-head { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #ff9a6b, var(--pink)); flex: none; }
+.who { font-weight: 600; }
+.who small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
+.bar { margin-left: auto; width: 96px; height: 8px; border-radius: 99px; background: linear-gradient(90deg, #ff5f6b, #e6e8f0 50%, #5fe39a); position: relative; }
+.bar::after { content: ""; position: absolute; left: 68%; top: -4px; width: 3px; height: 16px; background: #fff; border-radius: 2px; box-shadow: 0 0 8px #fff; }
+.msgs { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; font-size: 15px; }
+.msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; }
+.npc { background: #20263a; border-top-left-radius: 4px; }
+.you { align-self: flex-end; background: rgba(94,230,255,.14); border: 1px solid rgba(94,230,255,.3); border-top-right-radius: 4px; }
+.cue { color: var(--muted); font-style: italic; font-size: 13px; }
+
+/* Sections */
+section { padding: 72px 0; }
+h2 { font: 700 clamp(28px, 4vw, 38px)/1.1 "Space Grotesk", sans-serif; margin: 0 0 12px; letter-spacing: -.01em; }
+.sub { color: var(--muted); margin: 0 0 36px; max-width: 40em; }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+.card h3 { font: 600 18px/1.3 "Space Grotesk", sans-serif; margin: 12px 0 6px; }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+.icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; }
+.c1 { background: rgba(94,230,255,.12); } .c2 { background: rgba(255,95,168,.12); } .c3 { background: rgba(255,200,107,.12); }
+
+.steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.step { position: relative; padding: 22px 22px 22px 70px; background: var(--bg2); border: 1px solid var(--line); border-radius: var(--radius); }
+.step::before {
+  counter-increment: s; content: counter(s);
+  position: absolute; left: 20px; top: 20px; width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center; font: 700 16px/1 "Space Grotesk", sans-serif;
+  color: #06121a; background: var(--cyan);
+}
+.step h3 { margin: 4px 0 6px; font: 600 17px/1.3 "Space Grotesk", sans-serif; }
+.step p { margin: 0; color: var(--muted); font-size: 15px; }
+code, kbd {
+  font: 500 .92em/1 ui-monospace, Consolas, monospace; background: #1d2234; border: 1px solid var(--line);
+  border-radius: 6px; padding: 2px 6px; color: var(--text);
+}
+
+.need { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.need ul { margin: 0; padding-left: 20px; color: var(--muted); }
+.need li { margin: 6px 0; }
+.need li b { color: var(--text); font-weight: 600; }
+.note { border-left: 3px solid var(--amber); background: rgba(255,200,107,.06); padding: 14px 18px; border-radius: 0 10px 10px 0; color: var(--muted); font-size: 15px; }
+
+footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--muted); font-size: 14px; }
+footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+
+@media (max-width: 860px) {
+  .hero { padding: 48px 0; }
+  .hero-grid, .need { grid-template-columns: 1fr; }
+  .features, .steps { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .wrap { padding: 0 16px; }
+  .btn { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="skyline" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">A mod for Nivalis Nights</div>
+      <h1>Everyone in the city <span>has a story.</span></h1>
+      <p class="lede">Walk up to anyone, press <kbd>T</kbd>, and talk to them in your own words. <b>They remember you</b>:
+        your name, what you talked about, and how they feel about you. And while you're not looking, they talk to each other.</p>
+      <div class="actions">
+        <a class="btn btn-primary" id="download" href="https://github.com/skyehosting/PeopleOfNivalis/releases/latest">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
+          <span id="download-label">Download</span>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/skyehosting/PeopleOfNivalis">Source on GitHub</a>
+      </div>
+      <div class="meta" id="meta">Free, unofficial, and open to fork.</div>
+    </div>
+
+    <div class="chat" role="img" aria-label="An example conversation with a resident">
+      <div class="chat-head">
+        <div class="avatar"></div>
+        <div class="who">Dessa Kroll<small>Noodle stall cook · Lower Ring</small></div>
+        <div class="bar" title="How she feels about you"></div>
+      </div>
+      <div class="msgs">
+        <div class="msg npc"><span class="cue">wipes the counter, doesn't look up</span><br>You again. Same as last week, or are you finally trying the chilli?</div>
+        <div class="msg you">You remember what I ordered?</div>
+        <div class="msg npc">You asked me three times if it was spicy. Hard to forget. Rain's coming in, by the way. Grab a stool before it does.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap">
+      <h2>A city that talks back</h2>
+      <p class="sub">Every ordinary resident gets a lasting identity, a job, a mood and a life that moves on between your meetings.</p>
+      <div class="features">
+        <div class="card"><div class="icon c1">💬</div><h3>Talk to anyone</h3><p>They stop what they're doing, turn to you, and answer in character, knowing their work, their district, the time and the weather.</p></div>
+        <div class="card"><div class="icon c2">🧠</div><h3>They remember</h3><p>Each person keeps their own memory of you and a feeling about you that moves with every conversation. Old memories fade the way real ones do.</p></div>
+        <div class="card"><div class="icon c3">🗣️</div><h3>The city chats</h3><p>Residents talk among themselves, take phone calls, gossip about you, overhear things, and talk orders through with restaurant staff.</p></div>
+        <div class="card"><div class="icon c1">🔊</div><h3>Voices</h3><p>Lines spoken aloud in 3D, fading with distance, with a tone that follows the conversation. Many providers, or Windows' own voices.</p></div>
+        <div class="card"><div class="icon c2">📱</div><h3>A phone</h3><p>Text the people whose number you have, read the news, and post on Nightline, the city's social app, where residents react and comment.</p></div>
+        <div class="card"><div class="icon c3">🎛️</div><h3>Your rules</h3><p>Your own instructions for every character, a spending limit for the AI and voices, and a switch for every feature.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <h2>Install in three steps</h2>
+      <p class="sub">Close the game first. The game folder is the one with <code>Nivalis Nights.exe</code> in it (Steam: right-click the game › Manage › Browse local files).</p>
+      <div class="steps">
+        <div class="step"><h3>Download</h3><p>Get the latest zip from <a href="https://github.com/skyehosting/PeopleOfNivalis/releases/latest">Releases</a>.</p></div>
+        <div class="step"><h3>Drop it in</h3><p>Drag the zip's <code>BepInEx</code> folder into the game folder. Say yes to merging.</p></div>
+        <div class="step"><h3>Add your AI</h3><p>Start the game, then set your provider and key in Switchboard's Setup Wizard (<kbd>F9</kbd>) or in <code>PeopleOfNivalis.cfg</code>.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>What you need</h2>
+      <div class="need">
+        <ul>
+          <li><b>Nivalis Nights</b> with BepInEx for IL2CPP games (its "bleeding edge" build).</li>
+          <li><b>An AI to talk with:</b> a key from OpenAI, Anthropic, Google Gemini, OpenRouter, Groq, DeepSeek and others, or a model on your own PC (Ollama, LM Studio, KoboldCpp).</li>
+          <li><b>Optional:</b> a voice provider, and a Voyage AI key so people recall memories by meaning.</li>
+          <li><b>Recommended:</b> Nivalis Switchboard for in-game settings.</li>
+        </ul>
+        <div class="note">Your keys stay on your PC and go only to the provider you chose; the mod never logs them. Most providers charge for what you use, so set a usage limit in the Setup Wizard. Characters under 18 are never chatted with.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <div>People of Nivalis © skyehosting · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>: credit, no selling, share alike.</div>
+    <div><a href="https://github.com/skyehosting/PeopleOfNivalis/issues">Report a problem</a> · <a href="https://github.com/skyehosting/PeopleOfNivalis">Source</a></div>
+  </div>
+  <div class="wrap" style="margin-top:10px">Unofficial. Nivalis Nights and its content belong to their owners.</div>
+</footer>
+
+<script>
+// The newest release's zip, straight from GitHub (the button falls back to the Releases page).
+fetch("https://api.github.com/repos/skyehosting/PeopleOfNivalis/releases/latest")
+  .then(r => r.ok ? r.json() : null)
+  .then(rel => {
+    if (!rel) return;
+    const zip = (rel.assets || []).find(a => /\.zip$/i.test(a.name));
+    if (zip) document.getElementById("download").href = zip.browser_download_url;
+    document.getElementById("download-label").textContent = "Download " + rel.tag_name;
+    const when = rel.published_at ? new Date(rel.published_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : "";
+    document.getElementById("meta").textContent = "Latest: " + rel.tag_name + (when ? " · " + when : "") + " · free, unofficial, open to fork.";
+  })
+  .catch(() => {});
+</script>
+</body>
+</html>

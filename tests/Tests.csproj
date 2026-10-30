@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Console harness for the Unity-free parts of the mod (AI client, prompts, parser, NPC brain, store). -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RollForward>Major</RollForward>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>NivalisAIChat.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\src\Ai\*.cs" />
+    <Compile Include="..\src\Npc\*.cs" />
+    <Compile Include="..\src\Api\*.cs" />
+    <Compile Include="..\src\Mind\*.cs" />
+    <Compile Include="..\src\Phone\*.cs" />
+    <Compile Include="..\src\Game\GameSnapshot.cs" />
+    <Compile Include="..\src\Social\WorldMemory.cs" />
+    <Compile Include="..\src\Social\Reminders.cs" />
+    <Compile Include="..\src\Social\Couples.cs" />
+    <Compile Include="..\src\Social\GreetingRules.cs" />
+    <Compile Include="..\src\Social\FoodOffer.cs" />
+    <Compile Include="..\src\Social\MarketTalk.cs" />
+    <Compile Include="..\src\Social\FoodScene.cs" />
+    <Compile Include="..\src\Social\VisitBook.cs" />
+    <Compile Include="..\src\Social\MinorLines.cs" />
+    <Compile Include="..\src\Social\PairBook.cs" />
+    <Compile Include="..\src\Social\CircleBook.cs" />
+    <Compile Include="..\src\Social\ChatterPlan.cs" />
+    <Compile Include="..\src\Social\VenueRoles.cs" />
+    <Compile Include="..\src\Social\VenuePlan.cs" />
+    <Compile Include="..\src\Social\NameRules.cs" />
+    <Compile Include="..\src\Social\CompanyRules.cs" />
+    <Compile Include="..\src\Social\ViewCone.cs" />
+    <Compile Include="..\src\Social\FishPlan.cs" />
+    <Compile Include="..\src\Social\Rings.cs" />
+    <Compile Include="..\src\Social\UsageModel.cs" />
+    <Compile Include="..\src\Social\UsagePlanBook.cs" />
+    <Compile Include="..\src\Social\Sight.cs" />
+    <Compile Include="..\src\Game\Leash.cs" />
+    <Compile Include="..\src\Game\FollowGait.cs" />
+    <Compile Include="..\src\Voice\VoiceModels.cs" />
+    <Compile Include="..\src\Voice\Falloff.cs" />
+    <Compile Include="..\src\Voice\Tone.cs" />
+    <Compile Include="..\src\Voice\VoiceLevel.cs" />
+    <Compile Include="..\src\Voice\VoiceCatalog.cs" />
+    <Compile Include="..\src\Voice\VoiceBook.cs" />
+    <Compile Include="..\src\Voice\VoiceService.cs" />
+    <Compile Include="..\src\Voice\WindowsSpeech.cs" />
+    <Compile Include="..\src\Voice\VoiceProviderList.cs" />
+    <Compile Include="..\src\Voice\ProviderLines.cs" />
+    <Compile Include="..\src\Voice\VoiceCost.cs" />
+    <Compile Include="..\src\Voice\VoiceLedger.cs" />
+    <Compile Include="..\src\SettingsUpgrades.cs" />
+    <Compile Include="..\src\SettingsFileText.cs" />
+    <Compile Include="..\src\SettingsHistory.cs" />
+    <Compile Include="..\src\UI\ConsoleText.cs" />
+    <Compile Include="..\src\UI\HeardLog.cs" />
+    <Compile Include="..\src\UI\SettingsCatalog.cs" />
+    <Compile Include="..\src\UI\KeyboardLayout.cs" />
+    <Compile Include="..\src\UI\PadRepeat.cs" />
+    <Compile Include="..\src\Voice\PhoneSpeaker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fixtures\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

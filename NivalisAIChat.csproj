@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>NivalisAIChat</AssemblyName>
+    <RootNamespace>NivalisAIChat</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Version>0.10.3</Version>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <DebugType>embedded</DebugType>
+    <!-- Paths in the embedded debug info read NivalisAIChat\src\..., never this PC's own folders. A public build goes
+         further: no debug info at all (dotnet build -c Release -p:DebugType=none), checked by tools/release-check.js. -->
+    <PathMap>$(MSBuildProjectDirectory)=NivalisAIChat</PathMap>
+    <!-- The game folder; override with -p:GameDir=... -->
+    <GameDir Condition="'$(GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Nivalis Nights</GameDir>
+    <BepCore>$(GameDir)\BepInEx\core</BepCore>
+    <Interop>$(GameDir)\BepInEx\interop</Interop>
+    <!-- Copy the built DLL into BepInEx\plugins\PeopleOfNivalis after a build (the game closed; back up first): dotnet build -p:DeployToGame=true -->
+    <DeployToGame Condition="'$(DeployToGame)' == ''">false</DeployToGame>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Only src\ is the mod: the tests and the dev loader are projects of their own. -->
+    <Compile Remove="tests\**;dev\**;tools\**;docs\**" />
+    <None Remove="tests\**;dev\**;tools\**;docs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="$(BepCore)\BepInEx.Core.dll" Private="false" />
+    <Reference Include="$(BepCore)\BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="$(BepCore)\BepInEx.Unity.Common.dll" Private="false" />
+    <Reference Include="$(BepCore)\0Harmony.dll" Private="false" />
+    <Reference Include="$(BepCore)\Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="$(BepCore)\Il2CppInterop.Common.dll" Private="false" />
+    <Reference Include="$(Interop)\Il2Cppmscorlib.dll" Private="false" />
+    <Reference Include="$(Interop)\Il2CppSystem.Core.dll" Private="false" />
+    <Reference Include="$(Interop)\Assembly-CSharp.dll" Private="false" />
+    <Reference Include="$(Interop)\Assembly-CSharp-firstpass.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.UIModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.UI.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.TextRenderingModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.PhysicsModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.AnimationModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.AIModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.AudioModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.InputLegacyModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.ScreenCaptureModule.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.ImageConversionModule.dll" Private="false" />
+    <Reference Include="$(Interop)\Unity.Postprocessing.Runtime.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.IMGUIModule.dll" Private="false" />
+    <Reference Include="$(Interop)\Unity.TextMeshPro.dll" Private="false" />
+    <Reference Include="$(Interop)\Unity.InputSystem.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="DeployPlugin" AfterTargets="Build" Condition="'$(DeployToGame)' == 'true'">
+    <MakeDir Directories="$(GameDir)\BepInEx\plugins\PeopleOfNivalis" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameDir)\BepInEx\plugins\PeopleOfNivalis" ContinueOnError="true" />
+  </Target>
+
+</Project>

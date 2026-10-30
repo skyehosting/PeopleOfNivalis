@@ -1,0 +1,116 @@
+<?xml version='1.0'?>
+<!-- How the public copy is made: the steps are in release/README-release.md. Run from release\ with
+     obfuscar.console obfuscar.xml (obfuscar.globaltool 2.2.50). -->
+<Obfuscator>
+  <!-- In and out sit beside this file: $(ProjectFileDirectory) is the folder this file is in (audit step 7a). -->
+  <Var name="InPath" value="$(ProjectFileDirectory)\in" />
+  <Var name="OutPath" value="$(ProjectFileDirectory)\out" />
+  <Var name="KeepPublicApi" value="false" />
+  <Var name="HidePrivateApi" value="true" />
+  <Var name="HideStrings" value="true" />
+  <Var name="ReuseNames" value="true" />
+
+  <!-- The game's own folders, where Steam put them (absolute on purpose) -->
+  <AssemblySearchPath path="C:\Program Files (x86)\Steam\steamapps\common\Nivalis Nights\BepInEx\core" />
+  <AssemblySearchPath path="C:\Program Files (x86)\Steam\steamapps\common\Nivalis Nights\BepInEx\interop" />
+  <AssemblySearchPath path="C:\Program Files (x86)\Steam\steamapps\common\Nivalis Nights\dotnet" />
+
+  <Module file="$(InPath)\NivalisAIChat.dll">
+    <!-- BepInEx entry point and the behaviour injected into IL2CPP -->
+    <SkipType name="NivalisAIChat.Plugin" skipMethods="true" skipFields="true" skipProperties="true" skipStringHiding="true" />
+    <SkipType name="NivalisAIChat.Pump" skipMethods="true" skipFields="true" skipProperties="true" />
+    <!-- Nivalis Switchboard finds the page by name: a static class SettingsMenuPage with Describe() (its CONTRACT.md) -->
+    <SkipType name="NivalisAIChat.SettingsMenuPage" skipMethods="true" skipFields="true" skipProperties="true" />
+    <!-- Other settings menus (Mod Settings Menu, ConfigurationManager) and Switchboard read this tag by its type's name and its
+         fields' names (Browsable, ReadOnly, Order): renamed, every setting would be listed in them again (0.5.2) -->
+    <SkipType name="NivalisAIChat.ConfigurationManagerAttributes" skipFields="true" skipProperties="true" />
+
+    <!-- Harmony finds hooks by attribute, method name (Prefix) and parameter names (__instance, agent, character):
+         every class carrying [HarmonyPatch], and the three files that hold them by name as well -->
+    <SkipType name="*" decorator="HarmonyLib.HarmonyPatch" skipMethods="true" skipFields="true" skipProperties="true" />
+    <SkipType name="^NivalisAIChat\.Game\.NpcHold/.*" skipMethods="true" skipFields="true" skipProperties="true" />
+    <SkipType name="^NivalisAIChat\.Game\.PlayerLock/.*" skipMethods="true" skipFields="true" skipProperties="true" />
+    <SkipType name="^NivalisAIChat\.Game\.GameChatter/.*" skipMethods="true" skipFields="true" skipProperties="true" />
+    <SkipType name="^NivalisAIChat\.Game\.StoryDialogue/.*" skipMethods="true" skipFields="true" skipProperties="true" />
+    <SkipType name="^NivalisAIChat\.ConfigGuard/.*" skipMethods="true" skipFields="true" skipProperties="true" />
+    <SkipType name="^NivalisAIChat\.Game\.SaveHooks/.*" skipMethods="true" skipFields="true" skipProperties="true" />
+    <SkipType name="^NivalisAIChat\.Game\.HomeHooks/.*" skipMethods="true" skipFields="true" skipProperties="true" />
+    <SkipType name="^NivalisAIChat\.Game\.NameHooks/.*" skipMethods="true" skipFields="true" skipProperties="true" />
+    <!-- FB-67: the plugin API is public by design (plugins compile against these names). -->
+    <SkipNamespace name="NivalisAIChat.Api" />
+
+    <!-- Saved files (NPC memories, gossip/news, voices, the memory index, the under-18 list) are JSON keyed by these
+         property names. tests/ReleaseConfigTests.cs checks every type a saved file reaches is here. -->
+    <SkipType name="NivalisAIChat.Npc.NpcRecord" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.NpcVisual" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.Persona" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.SpeechStyle" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.NpcState" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.LifeEvent" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.Favour" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.Meeting" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.ToldItem" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.ChatLine" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.Talk" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.Doing" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.WorkLifeState" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.WorkEvent" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.MemoryEntry" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.MemoryFile" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.MinorList/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.Rumor" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.Headline" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.WorldData" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.VisitBook/Entry" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.PairBook/Pair" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.CircleBook/Circle" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Voice.VoiceAssignment" skipProperties="true" />
+    <!-- Missed until 0.5.0: the public 0.4.9 saved these as {} (story memory, the usage record, the plan) -->
+    <SkipType name="NivalisAIChat.Npc.StoryBook/Person" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.StoryBook/Scene" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.StoryBook/Line" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.UsagePlanBook/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Voice.VoiceLedger/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Voice.VoiceLedger/Book" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Voice.VoiceLedger/Stat" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.SaveSnapshots/Manifest" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.ReminderBook/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.ReminderBook/Reminder" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.CoupleBook/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.CoupleBook/Partner" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.CoupleBook/Couple" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Social.CoupleBook/Secret" skipProperties="true" />
+    <!-- The inner-life round: minds.json and witness.json (per save) keep their names. -->
+    <SkipType name="NivalisAIChat.Mind.MindBook/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Mind.MindBook/Mind" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Mind.AffectState" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Mind.Moodlet" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Mind.Thought" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Mind.WitnessBook/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Mind.Belief" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Npc.MealSeen" skipProperties="true" />
+    <!-- The phone: phone.json (per save) and the wallpaper's record keep their names. -->
+    <SkipType name="NivalisAIChat.Phone.PhoneBook/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.PhoneBook/Contact" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.PhoneBook/Thread" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.PhoneBook/Text" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.LineBook/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Ai.AiProfiles/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Ai.AiProfiles/Profile" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.LineBook/Line" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.LineBook/Reaction" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.LineBook/Comment" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.LineBook/Photo" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.ShotIndex/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.ShotIndex/Shot" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.Gallery/Data" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.Gallery/Photo" skipProperties="true" />
+    <SkipType name="NivalisAIChat.Phone.Wallpaper/Saved" skipProperties="true" />
+
+    <!-- Choices written or read by name: in the settings file, voices.json, and the dev greeting command -->
+    <SkipType name="NivalisAIChat.ApiFormat" skipFields="true" />
+    <SkipType name="NivalisAIChat.UI.TextSpeed" skipFields="true" />
+    <SkipType name="NivalisAIChat.Voice.VoiceProvider" skipFields="true" />
+    <SkipType name="NivalisAIChat.Social.GreetingRules/Kind" skipFields="true" />
+  </Module>
+</Obfuscator>

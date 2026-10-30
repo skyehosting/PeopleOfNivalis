@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- DEVELOPMENT ONLY: hot-reload host for testing the mod inside a running game. -->
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>NivalisAIChat.DevLoader</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GameDir Condition="'$(GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Nivalis Nights</GameDir>
+    <BepCore>$(GameDir)\BepInEx\core</BepCore>
+    <Interop>$(GameDir)\BepInEx\interop</Interop>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="$(BepCore)\BepInEx.Core.dll" Private="false" />
+    <Reference Include="$(BepCore)\BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="$(BepCore)\Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="$(Interop)\Il2Cppmscorlib.dll" Private="false" />
+    <Reference Include="$(Interop)\UnityEngine.CoreModule.dll" Private="false" />
+  </ItemGroup>
+</Project>

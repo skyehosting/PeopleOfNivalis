@@ -1,0 +1,12 @@
+# .NET build output
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.pdb
+
+# Never commit your settings or keys
+*.cfg
+ai_profiles.json
+LogOutput.log
