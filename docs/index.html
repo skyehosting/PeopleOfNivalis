@@ -115,6 +115,12 @@ h1 em { font-style: normal; color: var(--name); }
 .lede { margin: 0 0 26px; font-size: clamp(16px, min(.8vw + 8px, 2.3vh), 23px); line-height: 1.5; color: var(--body); max-width: 33em; }
 .lede kbd, .k { font: 800 .85em/1 Barlow, sans-serif; color: var(--text); border: 1.5px solid var(--golddim); border-radius: 6px; padding: 2px 7px; background: rgba(0,0,0,.35); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.badge-cd { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 16px; padding: 6px 14px 6px 10px; border-radius: 999px; border: 1px solid rgba(150,196,168,.45); background: rgba(26,44,42,.62); color: var(--pill); font-weight: 700; font-size: 14px; text-decoration: none; }
+.badge-cd:hover { border-color: var(--pill); }
+.badge-cd i { width: 8px; height: 8px; border-radius: 50%; background: #7fd19b; box-shadow: 0 0 0 3px rgba(127,209,155,.22); }
+.badge-cd b { color: var(--text); font-weight: 800; }
+.ready { margin-top: 12px; font-size: 14px; color: var(--body); }
+.ready b { color: var(--text); }
 .meta { margin-top: 14px; font-size: 14px; color: var(--muted); text-wrap: pretty; }
 
 /* Demos keep the mod's own proportions and are scaled to fit (by width and height) */
@@ -211,6 +217,10 @@ h2 em { font-style: normal; color: var(--name); }
 .point p { margin: 0; color: var(--muted); font-size: var(--fs-small); line-height: 1.5; }
 
 /* The phone */
+#phone { overflow: hidden; isolation: isolate; }
+#phone > picture, #phone > picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+#phone > picture img { object-position: 85% 40%; filter: blur(3px) saturate(.9); transform: scale(1.04); }
+#phone::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(20,17,15,.95) 0%, rgba(20,17,15,.86) 42%, rgba(20,17,15,.5) 72%, rgba(20,17,15,.68) 100%), linear-gradient(0deg, var(--deep) 0%, transparent 18%, transparent 82%, var(--deep) 100%); }
 .phone-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: clamp(28px, 5vw, 80px); align-items: center; }
 .tour { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .tour li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 12px 16px; border-radius: 14px; border: 1px solid transparent; transition: background .35s, border-color .35s; }
@@ -357,7 +367,7 @@ h2 em { font-style: normal; color: var(--name); }
 .steps p { margin: 0; color: var(--muted); font-size: var(--fs-small); line-height: 1.5; }
 .after { margin: clamp(14px, 2.4vh, 24px) 0 0; color: var(--muted); font-size: var(--fs-small); }
 .after b { color: var(--body); }
-.cta .after { max-width: 46em; margin-inline: auto; line-height: 1.8; }
+.cta .after { max-width: 46em; margin-inline: auto; line-height: 1.7; }
 code, .k { white-space: nowrap; }
 .after code { white-space: normal; overflow-wrap: anywhere; }
 code { font: 600 .9em/1 ui-monospace, Consolas, monospace; color: var(--text); background: #26221e; border: 1px solid #3a342d; border-radius: 6px; padding: 2px 6px; }
@@ -373,7 +383,18 @@ code { font: 600 .9em/1 ui-monospace, Consolas, monospace; color: var(--text); b
 .cta .actions { justify-content: center; }
 .cta .btn { height: 52px; padding: 0 28px; font-size: 16px; }
 
-footer { border-top: 1px solid rgba(118,97,62,.3); padding: 32px 0 calc(40px + env(safe-area-inset-bottom)); color: var(--muted); font-size: 15px; }
+footer { border-top: 1px solid rgba(118,97,62,.3); padding: 18px 0 calc(22px + env(safe-area-inset-bottom)); color: var(--muted); font-size: 15px; }
+.community { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(118,97,62,.22); }
+.community .cm-text { flex: 1 1 320px; color: var(--body); }
+.community .cm-text b { color: var(--name); }
+.cm-people { display: flex; align-items: center; padding-left: 8px; }
+.cm-people a { width: 38px; height: 38px; margin-left: -8px; border-radius: 50%; border: 2px solid #1d1a17; background: #2a2622; overflow: hidden; transition: transform .15s; }
+.cm-people a:hover { transform: translateY(-3px); z-index: 1; }
+.cm-people img { width: 100%; height: 100%; display: block; }
+.cm-people .more { display: grid; place-items: center; color: var(--name); font-weight: 800; font-size: 13px; text-decoration: none; }
+.cm-stats { display: flex; gap: 18px; font-size: 14px; }
+.cm-stats span b { display: block; font-size: 20px; line-height: 1.1; color: var(--text); font-weight: 800; font-variant-numeric: tabular-nums; }
+.community .btn { margin-left: auto; }
 footer .row { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
 footer a { color: var(--body); }
 
@@ -498,7 +519,8 @@ footer a { color: var(--body); }
       <img src="img/street-1440.jpg" srcset="img/street-960.jpg 960w, img/street-1440.jpg 1440w, img/street-1920.jpg 1920w" sizes="100vw" alt="" fetchpriority="high">
     </picture>
     <div class="wrap hero-grid">
-      <div>
+      <div class="hero-text">
+        <a class="badge-cd" href="https://github.com/skyehosting/PeopleOfNivalis"><i></i><span><b>Now community-driven</b> · open source on GitHub</span></a><br>
         <div class="eyebrow">A mod for Nivalis Nights</div>
         <h1 id="hero-title">Everyone in Nivalis <em>has a story.</em></h1>
         <p class="lede">Walk up to anyone, press <kbd>T</kbd>, and talk to them in your own words. They remember your name if you gave it, what you talked about, and how they feel about you. And when you're not looking, they talk to each other.</p>
@@ -509,6 +531,7 @@ footer a { color: var(--body); }
           </a>
           <a class="btn btn-line" href="#install">How to install</a>
         </div>
+        <div class="ready"><b>Ready to play:</b> the zip is the mod itself, nothing to build. The code is on GitHub for anyone who wants it.</div>
         <div class="meta js-meta">Free and unofficial. Bring your own AI key, or run a model on your own PC.</div>
       </div>
       <div>
@@ -575,7 +598,11 @@ footer a { color: var(--body); }
     </div>
   </section>
 
-  <section id="phone" class="fitview" aria-labelledby="phone-title" style="background:radial-gradient(60% 50% at 75% 50%, rgba(217,165,90,.07), transparent 70%)">
+  <section id="phone" class="fitview" aria-labelledby="phone-title">
+    <picture>
+      <source type="image/webp" srcset="img/residents-960.webp 960w, img/residents-1440.webp 1440w, img/residents-1920.webp 1920w" sizes="100vw">
+      <img src="img/residents-1440.jpg" srcset="img/residents-960.jpg 960w, img/residents-1440.jpg 1440w, img/residents-1920.jpg 1920w" sizes="100vw" alt="" loading="lazy" decoding="async">
+    </picture>
     <div class="wrap phone-grid">
       <div class="tour-col">
         <p class="kicker">Your phone</p>
@@ -678,7 +705,7 @@ footer a { color: var(--body); }
       <p class="intro" style="margin-inline:auto">Free and unofficial. Bring your own AI key, or run a model on your own PC.</p>
       <div class="actions">
         <a class="btn btn-gold js-download" href="https://github.com/skyehosting/PeopleOfNivalis/releases/latest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg><span class="js-download-label">Download</span></a>
-        <a class="btn btn-line" href="https://github.com/skyehosting/PeopleOfNivalis">Source on GitHub</a>
+        <a class="btn btn-line" href="https://github.com/skyehosting/PeopleOfNivalis">Source code</a>
       </div>
       <p class="after"><b>Updating</b> keeps your settings and everyone's memories.<br><b>Something wrong?</b> Press the backtick key <span class="k">`</span> (left of 1) and type <code>/errors</code>, or attach <code>BepInEx\LogOutput.log</code> to an <a href="https://github.com/skyehosting/PeopleOfNivalis/issues">issue</a> (never the .cfg).<br><b>To uninstall</b>, delete <code>BepInEx\plugins\PeopleOfNivalis</code>.</p>
     </div>
@@ -686,9 +713,15 @@ footer a { color: var(--body); }
 </main>
 
 <footer>
+  <div class="wrap community" aria-label="The community">
+    <div class="cm-text"><b>Community-driven.</b> Open source: anyone can fix, improve and add to it.</div>
+    <div class="cm-people" id="cm-people"></div>
+    <div class="cm-stats" id="cm-stats" hidden><span><b id="cm-n">·</b>contributors</span><span><b id="cm-c">·</b>commits</span><span><b id="cm-p">·</b>pull requests</span></div>
+    <a class="btn btn-line btn-sm" href="https://github.com/skyehosting/PeopleOfNivalis#contributing">Contribute</a>
+  </div>
   <div class="wrap row">
     <div>People of Nivalis © skyehosting · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>: credit, no selling, share alike.</div>
-    <div><a href="https://github.com/skyehosting/PeopleOfNivalis/issues">Report a problem</a> · <a href="https://github.com/skyehosting/PeopleOfNivalis">Source</a> · forks and pull requests welcome</div>
+    <div><a href="https://github.com/skyehosting/PeopleOfNivalis/issues">Report a problem</a> · <a href="https://github.com/skyehosting/PeopleOfNivalis">Source</a></div>
   </div>
   <div class="wrap" style="margin-top:8px">Characters under 18 are never chatted with. Unofficial: Nivalis Nights and its content belong to their owners. Screenshots taken in game.</div>
 </footer>
@@ -739,14 +772,20 @@ footer a { color: var(--body); }
   // the screen, scrolled as usual) rather than shrinking further.
   const FLOOR = .86;
   // What scales, and the box whose height must fit (a wrap's children scale, so its left edge stays where the others are).
-  const zoomable = sec => sec.id === "city" ? [[$(".side", sec)], $(".side", sec)] : sec.id === "phone" ? [[$(".tour-col", sec)], $(".tour-col", sec)] : [[...$(".wrap", sec).children], $(".wrap", sec)];
+  const zoomable = sec => sec.id === "city" ? [[$(".side", sec)], $(".side", sec)] : sec.id === "phone" ? [[$(".tour-col", sec)], $(".tour-col", sec)]
+    : sec.classList.contains("hero") ? [[$(".hero-text", sec)], $(".hero-text", sec)] : [[...$(".wrap", sec).children], $(".wrap", sec)];
   function fitSections() {
-    for (const sec of $$(".fitview")) {
+    const foot = $("footer");
+    const footH = foot ? foot.offsetHeight : 0;
+    if (foot) document.documentElement.style.setProperty("--foot", footH + "px");
+    for (const sec of [$(".hero"), ...$$(".fitview"), $(".cta")]) {
       const [zs, box] = zoomable(sec);
       zs.forEach(z => z.style.zoom = "");
       sec.classList.remove("flow");
       if (!wide.matches) continue;
-      const budget = room(sec) - 2; // a hair under, so rounding never tips it over
+      const hcs = sec.classList.contains("hero") && getComputedStyle(sec);
+      // the hero's room is the window less its padding; the last screen's, the window less the bar and the footer
+      const budget = (hcs ? innerHeight - parseFloat(hcs.paddingTop) - parseFloat(hcs.paddingBottom) : sec.classList.contains("cta") ? room(sec) - footH : room(sec)) - 2;
       const measure = () => box.getBoundingClientRect().height;
       const set = k => zs.forEach(z => z.style.zoom = k === 1 ? "" : k);
       if (measure() <= budget) continue;
@@ -756,8 +795,6 @@ footer a { color: var(--body); }
       for (let i = 0; i < 6; i++) { const mid = (lo + hi) / 2; set(mid); if (measure() <= budget) lo = mid; else hi = mid; }
       set(lo);
     }
-    const foot = $("footer");
-    if (foot) document.documentElement.style.setProperty("--foot", foot.offsetHeight + "px");
   }
   function relayout() { fitSections(); layout(); }
   relayout();
@@ -1047,6 +1084,25 @@ footer a { color: var(--body); }
       $(".js-meta").textContent = `Latest: ${rel.tag_name}${when ? " · " + when : ""} · free and unofficial · bring your own AI key, or run a model on your PC.`;
     })
     .catch(() => {});
+
+  // ---- The community, live from GitHub: who has contributed, and how many commits and pull requests there are.
+  const API = "https://api.github.com/repos/skyehosting/PeopleOfNivalis";
+  const lastPage = r => { const m = /[?&]page=(\d+)>; rel="last"/.exec(r.headers.get("Link") || ""); return m ? +m[1] : null; };
+  const fmt = n => n.toLocaleString();
+  Promise.all([
+    fetch(API + "/contributors?per_page=100").then(r => r.ok ? r.json() : []),
+    fetch(API + "/commits?per_page=1").then(r => r.ok ? r.json().then(j => lastPage(r) ?? j.length) : null),
+    fetch(API + "/pulls?state=all&per_page=1").then(r => r.ok ? r.json().then(j => lastPage(r) ?? j.length) : null),
+  ]).then(([people, commits, prs]) => {
+    if (!Array.isArray(people) || commits == null) return;
+    const shown = people.filter(p => p.type !== "Bot").slice(0, 12);
+    const box = $("#cm-people");
+    box.innerHTML = shown.map(p => `<a href="${esc(p.html_url)}" title="${esc(p.login)} · ${p.contributions} commits"><img src="${esc(p.avatar_url)}&s=76" alt="${esc(p.login)}" width="38" height="38" loading="lazy"></a>`).join("")
+      + (people.length > shown.length ? `<a class="more" href="https://github.com/skyehosting/PeopleOfNivalis/graphs/contributors">+${people.length - shown.length}</a>` : "");
+    $("#cm-n").textContent = fmt(people.length); $("#cm-c").textContent = fmt(commits); $("#cm-p").textContent = fmt(prs ?? 0);
+    $("#cm-stats").hidden = false;
+    relayout(); // the footer grew: the last screen is measured again
+  }).catch(() => {});
 })();
 </script>
 </body>

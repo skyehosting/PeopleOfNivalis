@@ -12,6 +12,12 @@ voices that fade with distance. Story characters remember the scenes you've had 
 **[Download the latest release](https://github.com/skyehosting/PeopleOfNivalis/releases/latest)** ·
 **[Website](https://skyehosting.github.io/PeopleOfNivalis/)**
 
+On the release page, take **`PeopleOfNivalis-<version>.zip`**: that's the ready-to-play mod, nothing to build. The
+"Source code" downloads GitHub adds under it are the code, for developers.
+
+> **People of Nivalis is now community-driven.** It's open source: fixes, improvements and new ideas are welcome as
+> issues and pull requests (see [Contributing](#contributing)).
+
 ## What it does
 
 - **Talk to anyone.** Look at a person, press **T**, type. They stop what they're doing, turn to you, and answer in
