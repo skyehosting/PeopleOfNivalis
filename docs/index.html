@@ -359,7 +359,10 @@ h2 em { font-style: normal; color: var(--name); }
 .card p { margin: 0; color: var(--muted); font-size: var(--fs-small); line-height: 1.5; }
 
 /* Install */
-.install { background: linear-gradient(180deg, #181513, #14110f); border-block: 1px solid rgba(118,97,62,.3); }
+.install { background: #14110f; border-block: 1px solid rgba(118,97,62,.3); overflow: hidden; isolation: isolate; }
+.install > picture, .install > picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.install > picture img { object-position: 15% 60%; filter: blur(3px) saturate(.9); transform: scale(1.04); }
+.install::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(270deg, rgba(20,17,15,.95) 0%, rgba(20,17,15,.88) 45%, rgba(20,17,15,.62) 80%, rgba(20,17,15,.76) 100%), linear-gradient(0deg, var(--deep) 0%, transparent 16%, transparent 84%, var(--deep) 100%); }
 .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
 .steps li { position: relative; padding: 22px 22px 22px 76px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); }
 .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 22px; top: 22px; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 18px; color: #1a1714; background: var(--name); border: 1.5px solid var(--gold); }
@@ -677,6 +680,10 @@ footer a { color: var(--body); }
   </section>
 
   <section id="install" class="install fitview" aria-labelledby="install-title">
+    <picture>
+      <source type="image/webp" srcset="img/street-960.webp 960w, img/street-1440.webp 1440w, img/street-1920.webp 1920w" sizes="100vw">
+      <img src="img/street-1440.jpg" srcset="img/street-960.jpg 960w, img/street-1440.jpg 1440w, img/street-1920.jpg 1920w" sizes="100vw" alt="" loading="lazy" decoding="async">
+    </picture>
     <div class="wrap">
       <p class="kicker">Get started</p>
       <h2 id="install-title">Install in <em>three steps.</em></h2>
