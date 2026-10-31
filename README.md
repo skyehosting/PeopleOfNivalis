@@ -1,5 +1,7 @@
 # People of Nivalis
 
+<p align="center"><img src="docs/img/og.gif" alt="The People of Nivalis chat window over a Nivalis street at night: a resident answers in character, her mood and how she feels about you change as you talk." width="100%"></p>
+
 A mod for **Nivalis Nights**: walk up to an ordinary person, press **T**, and talk to them in your own words.
 
 Everyone you meet gets a lasting identity, a mood, a job and a life that moves on between meetings, and they
@@ -26,6 +28,24 @@ voices that fade with distance. Story characters remember the scenes you've had 
   and a switch for every feature.
 - Characters under 18 are never chatted with.
 
+## See it in motion
+
+<p align="center"><img src="media/city.gif" alt="A street in Nivalis: speech bubbles over residents' heads as two of them talk and another takes a phone call, then you say something to the people in front of you and they answer." width="100%"></p>
+
+<p align="center"><em>Residents talk among themselves, take calls, and answer when you speak up (Enter).</em></p>
+
+<table align="center"><tr>
+<td width="46%" align="center"><img src="media/phone.gif" alt="The in-game phone: a text conversation with typing dots and read receipts, then Nightline, the city's social app, then the news." width="100%"></td>
+<td width="54%">
+
+**Your phone (N).** Get someone's number in a chat, then text them: they answer in their own time, with typing dots and read receipts.
+
+**Nightline** is the city's social app: residents post, react and comment, and remember it. You can post too, with photos from the phone's camera.
+
+**News** shows what's on the holos and the talk around town, the same things people bring up when you chat.
+
+</td></tr></table>
+
 ## What you need
 
 - Nivalis Nights, with BepInEx for IL2CPP games (its "bleeding edge" build) installed in the game folder.
@@ -49,7 +69,9 @@ Updating: do the same with the new zip. Your settings and everyone's memories ar
 
 ## Set up your AI
 
-**With Nivalis Switchboard:** press **F9**, open People of Nivalis, then the Setup Wizard at the top:
+<p align="center"><img src="media/switchboard.gif" alt="Nivalis Switchboard, the in-game settings menu: switches, sliders and lists for People of Nivalis's settings, with mouse and controller." width="100%"></p>
+
+**With [Nivalis Switchboard](https://github.com/skyehosting/NivalisSwitchboard):** press **F9**, open People of Nivalis, then the Setup Wizard at the top:
 1. Your AI: pick a provider (it fills in the address and models), paste your key, and press Test connection.
 2. Voices (optional): turn on a provider, add its key, and press Test voices.
 3. Your usage: set the most the mod may use per hour, day or month, and use the plan it recommends.
