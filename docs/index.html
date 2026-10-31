@@ -650,13 +650,13 @@ footer a { color: var(--body); }
       <ol class="steps">
         <li><h3>Download</h3><p>Get the latest zip from <a href="https://github.com/skyehosting/PeopleOfNivalis/releases/latest">the Releases page</a>.</p></li>
         <li><h3>Drop it in</h3><p>Drag the zip's <code>BepInEx</code> folder into the game folder, where <code>Nivalis Nights.exe</code> is, and say yes to merging.</p></li>
-        <li><h3>Add your AI</h3><p>Start the game, then set your provider and key at the top of <code>BepInEx\config\PeopleOfNivalis.cfg</code> (a saved change applies in seconds), or in Switchboard's Setup Wizard (<span class="k">F9</span>) if you have it.</p></li>
+        <li><h3>Add your AI</h3><p>Start the game, then set your provider and key at the top of <code>BepInEx\config\PeopleOfNivalis.cfg</code> (a saved change applies in seconds), or in <a href="https://github.com/skyehosting/NivalisSwitchboard/releases/latest">Switchboard's</a> Setup Wizard (<span class="k">F9</span>).</p></li>
       </ol>
       <div class="need">
         <ul>
           <li><b>An AI to talk with:</b> a key from OpenAI, Anthropic, Google Gemini, OpenRouter, DeepSeek and others, or a free model on your own PC (Ollama, LM Studio, KoboldCpp).</li>
           <li><b>Optional:</b> a voice provider; a Voyage AI key for recall by meaning.</li>
-          <li><b>Recommended:</b> Nivalis Switchboard (a separate download) for in-game settings.</li>
+          <li><b>Recommended:</b> <a href="https://github.com/skyehosting/NivalisSwitchboard/releases/latest">Nivalis Switchboard</a> (free, a separate zip) for in-game settings.</li>
         </ul>
         <div class="note"><p><b>Your keys stay on your PC</b>, go only to the provider you chose, and never reach the log. Don't share <code>PeopleOfNivalis.cfg</code>: it holds them.</p><p><b>Costs:</b> most providers charge for what you use, so set a limit (<code>TokenLimit</code> in the cfg, or the Setup Wizard). Voices start on, and with an OpenAI key they're paid from it (<code>Enabled = false</code> under <code>[Voices]</code> turns them off).</p></div>
       </div>
@@ -1031,7 +1031,7 @@ footer a { color: var(--body); }
     .then(r => r.ok ? r.json() : null)
     .then(rel => {
       if (!rel) return;
-      const zip = (rel.assets || []).find(a => /\.zip$/i.test(a.name));
+      const zip = (rel.assets || []).find(a => /^PeopleOfNivalis.*\.zip$/i.test(a.name)); // the mod's own zip (Switchboard's sits beside it)
       if (zip) $$(".js-download").forEach(a => a.href = zip.browser_download_url);
       const mb = zip ? ` (zip, ${(zip.size / 1048576).toFixed(1)} MB)` : "";
       $$(".js-download-label").forEach(s => s.textContent = "Download " + rel.tag_name + mb);

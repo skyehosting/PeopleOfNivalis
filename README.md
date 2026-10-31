@@ -32,8 +32,8 @@ voices that fade with distance. Story characters remember the scenes you've had 
 - An AI to talk with: a key from a provider (OpenAI, Anthropic, Google Gemini, OpenRouter, Groq, DeepSeek and
   others), or a model running on your own PC (Ollama, LM Studio, KoboldCpp...).
 - Optional: a voice provider, and a Voyage AI key so people can recall old memories by meaning.
-- Recommended: Nivalis Switchboard (a separate download) for in-game settings. Without it, every setting is in a
-  text file.
+- Recommended: [Nivalis Switchboard](https://github.com/skyehosting/NivalisSwitchboard/releases/latest) (free, a separate zip,
+  also attached to each release here) for in-game settings. Without it, every setting is in a text file.
 
 ## Install
 
